@@ -1,0 +1,11 @@
+{
+	"name": "ls_AKV_sqlsource",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://adf-keyvault-sd-dev.vault.azure.net/"
+		}
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"name": "ls_sql_keyvault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_AKV_sqlsource",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "secret-sqldb-sdeepika",
+				"secretVersion": "1891116b515d4213997741a5527c9d5e"
+			}
+		}
+	}
+}

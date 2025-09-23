@@ -1,0 +1,21 @@
+{
+	"name": "adf15-sd-dev",
+	"properties": {
+		"globalParameters": {
+			"ADLScontainer": {
+				"type": "string",
+				"value": "adlsgen2sdcontainer"
+			},
+			"target": {
+				"type": "string",
+				"value": "target"
+			}
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e280387a-877c-4ee2-9834-5201f1a2996f",
+		"tenantId": "768b1988-7a0a-4217-80b9-fe7bc8a3351d"
+	}
+}

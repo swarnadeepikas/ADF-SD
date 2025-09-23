@@ -1,0 +1,17 @@
+{
+	"name": "ds_source_sql_incremental_load_oldwm",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_sql_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "watermarktable"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

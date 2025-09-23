@@ -1,0 +1,17 @@
+{
+	"name": "ds_keyvault_sql_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql_keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "iplteams"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
