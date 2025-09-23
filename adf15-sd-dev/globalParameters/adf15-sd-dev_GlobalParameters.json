@@ -1,0 +1,10 @@
+{
+	"ADLScontainer": {
+		"type": "string",
+		"value": "adlsgen2sdcontainer"
+	},
+	"target": {
+		"type": "string",
+		"value": "target"
+	}
+}

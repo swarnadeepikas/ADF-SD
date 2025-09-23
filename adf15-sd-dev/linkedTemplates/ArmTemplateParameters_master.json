@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf15-sd-dev"
+		},
+		"ls_adls_source_accountKey": {
+			"value": ""
+		},
+		"ls_source_sql_db_password": {
+			"value": ""
+		},
+		"ls_sql_SystemIdentity_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserverdevsd.database.windows.net;Initial Catalog=sqldbdev"
+		},
+		"ls_target_sql_db_password": {
+			"value": ""
+		},
+		"ls_AKV_sqlsource_properties_typeProperties_baseUrl": {
+			"value": "https://adf-keyvault-sd-dev.vault.azure.net/"
+		},
+		"ls_RestService_reqres_properties_typeProperties_url": {
+			"value": "https://reqres.in/api/users"
+		},
+		"ls_adls_source_properties_typeProperties_url": {
+			"value": "https://adlsgen2sd.dfs.core.windows.net"
+		},
+		"ls_source_sql_db_properties_typeProperties_server": {
+			"value": "sqlserverdevsd.database.windows.net"
+		},
+		"ls_source_sql_db_properties_typeProperties_database": {
+			"value": "sqldbdev"
+		},
+		"ls_source_sql_db_properties_typeProperties_userName": {
+			"value": "ssdeepika"
+		},
+		"ls_sql_keyvault_properties_typeProperties_connectionString_secretName": {
+			"value": "secret-sqldb-sdeepika"
+		},
+		"ls_target_sql_db_properties_typeProperties_server": {
+			"value": "sqlserverdevsd.database.windows.net"
+		},
+		"ls_target_sql_db_properties_typeProperties_database": {
+			"value": "targetsqldbdev"
+		},
+		"ls_target_sql_db_properties_typeProperties_userName": {
+			"value": "ssdeepika"
+		},
+		"trigger_tumbling_window_properties_pipeline_parameters_StartDate": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"trigger_tumbling_window_properties_pipeline_parameters_EndDate": {
+			"value": "@trigger().outputs.windowEndTime"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
