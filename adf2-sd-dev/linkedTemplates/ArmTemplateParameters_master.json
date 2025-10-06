@@ -24,13 +24,13 @@
 			"value": "https://reqres.in/api/users"
 		},
 		"ls_adls_source_properties_typeProperties_url": {
-			"value": "https://adlsgen2sd.dfs.core.windows.net"
+			"value": "https://adlsgen2sdcontainer.dfs.core.windows.net"
 		},
 		"ls_source_sql_db_properties_typeProperties_server": {
-			"value": "sqlserverdevsd.database.windows.net"
+			"value": "sqlserverdevsd2.database.windows.net"
 		},
 		"ls_source_sql_db_properties_typeProperties_database": {
-			"value": "sqldbdev"
+			"value": "sqlserverdevsd"
 		},
 		"ls_source_sql_db_properties_typeProperties_userName": {
 			"value": "ssdeepika"

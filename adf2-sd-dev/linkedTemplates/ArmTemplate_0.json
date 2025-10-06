@@ -34,15 +34,15 @@
 		},
 		"ls_adls_source_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://adlsgen2sd.dfs.core.windows.net"
+			"defaultValue": "https://adlsgen2sdcontainer.dfs.core.windows.net"
 		},
 		"ls_source_sql_db_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "sqlserverdevsd.database.windows.net"
+			"defaultValue": "sqlserverdevsd2.database.windows.net"
 		},
 		"ls_source_sql_db_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "sqldbdev"
+			"defaultValue": "sqlserverdevsd"
 		},
 		"ls_source_sql_db_properties_typeProperties_userName": {
 			"type": "string",
