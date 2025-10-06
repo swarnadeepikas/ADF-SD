@@ -1,5 +1,17 @@
 {
 	"name": "adf2-sd-dev",
+	"properties": {
+		"globalParameters": {
+			"ADLScontainer": {
+				"type": "string",
+				"value": "adlsgen2sdcontainer"
+			},
+			"target": {
+				"type": "string",
+				"value": "target"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
