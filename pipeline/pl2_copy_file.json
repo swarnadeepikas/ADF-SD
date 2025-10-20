@@ -1,7 +1,6 @@
 {
-	"name": "pl_copy_file",
+	"name": "pl2_copy_file",
 	"properties": {
-		"description": "copy csv file",
 		"activities": [
 			{
 				"name": "CopyFile",
@@ -50,30 +49,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_adls_source_copy_file",
-						"type": "DatasetReference"
+						"referenceName": "ds2_copy_file_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "CarSales.csv"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_adls_target_copy_file",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": {
-								"value": "@pipeline().globalParameters.ADLScontainer",
-								"type": "Expression"
-							},
-							"target": {
-								"value": "@pipeline().globalParameters.target",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "ds2_copy_file_target",
+						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2025-10-06T04:46:31Z"
+		"lastPublishTime": "2025-10-06T10:41:02Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
