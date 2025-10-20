@@ -9,6 +9,10 @@
 			"target": {
 				"type": "string",
 				"value": "target"
+			},
+			"ADLS_Prefix": {
+				"type": "string",
+				"value": "abfs://adlsgen2sd@adlsgen2sdcontainer.dfs.core.windows.net"
 			}
 		}
 	},
