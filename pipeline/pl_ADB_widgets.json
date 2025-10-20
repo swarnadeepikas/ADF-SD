@@ -1,0 +1,37 @@
+{
+	"name": "pl_ADB_widgets",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/ssdeepika97@gmail.com/adb_sd15/ADF-ADB-Widgets",
+					"baseParameters": {
+						"ADLS_Prefix": {
+							"value": "@pipeline().globalParameters.ADLS_Prefix",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "ADB-pipelines"
+		},
+		"annotations": []
+	}
+}
