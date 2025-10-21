@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf2-sd-dev"
 		},
+		"ls_AzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_AzureDatabricks'"
+		},
 		"ls_adls_source_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_adls_source'"
@@ -27,6 +31,10 @@
 		"ls_AKV_sqlsource_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://adf-keyvault-sd-dev.vault.azure.net/"
+		},
+		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1014-183259-syq6gik1"
 		},
 		"ls_RestService_reqres_properties_typeProperties_url": {
 			"type": "string",
@@ -99,6 +107,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_AzureDatabricks_accessToken": {
+						"value": "[parameters('ls_AzureDatabricks_accessToken')]"
+					},
 					"ls_adls_source_accountKey": {
 						"value": "[parameters('ls_adls_source_accountKey')]"
 					},
@@ -113,6 +124,9 @@
 					},
 					"ls_AKV_sqlsource_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ls_AKV_sqlsource_properties_typeProperties_baseUrl')]"
+					},
+					"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_AzureDatabricks_properties_typeProperties_existingClusterId')]"
 					},
 					"ls_RestService_reqres_properties_typeProperties_url": {
 						"value": "[parameters('ls_RestService_reqres_properties_typeProperties_url')]"
@@ -198,6 +212,26 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf2-sd-dev_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "adf2-sd-dev_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"trigger_tumbling_window_properties_pipeline_parameters_StartDate": {
 						"value": "[parameters('trigger_tumbling_window_properties_pipeline_parameters_StartDate')]"
@@ -208,7 +242,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'adf2-sd-dev_ArmTemplate_2')]"
+				"[resourceId('Microsoft.Resources/deployments', 'adf2-sd-dev_ArmTemplate_3')]"
 			]
 		}
 	]

@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adf2-sd-dev"
 		},
+		"ls_AzureDatabricks_accessToken": {
+			"value": ""
+		},
 		"ls_adls_source_accountKey": {
 			"value": ""
 		},
@@ -19,6 +22,9 @@
 		},
 		"ls_AKV_sqlsource_properties_typeProperties_baseUrl": {
 			"value": "https://adf-keyvault-sd-dev.vault.azure.net/"
+		},
+		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"value": "1014-183259-syq6gik1"
 		},
 		"ls_RestService_reqres_properties_typeProperties_url": {
 			"value": "https://reqres.in/api/users"

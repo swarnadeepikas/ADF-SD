@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf2-sd-dev"
 		},
+		"ls_AzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_AzureDatabricks'"
+		},
 		"ls_adls_source_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_adls_source'"
@@ -27,6 +31,10 @@
 		"ls_AKV_sqlsource_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://adf-keyvault-sd-dev.vault.azure.net/"
+		},
+		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1014-183259-syq6gik1"
 		},
 		"ls_RestService_reqres_properties_typeProperties_url": {
 			"type": "string",
@@ -157,11 +165,218 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adls_source_copy_file')]",
 				"[concat(variables('factoryId'), '/datasets/ds_adls_target_copy_file')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl2_copy_file')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyFile",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds2_copy_file_source",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "CarSales.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds2_copy_file_target",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-10-06T10:41:02Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds2_copy_file_source')]",
+				"[concat(variables('factoryId'), '/datasets/ds2_copy_file_target')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl2_copyfile_list')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "source",
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds2_copy_file_source",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "CarSales.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds2_copy_file_target",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-10-07T08:04:24Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds2_copy_file_source')]",
+				"[concat(variables('factoryId'), '/datasets/ds2_copy_file_target')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_ADB_widgets')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/ssdeepika97@gmail.com/adb_sd15/ADF-ADB-Widgets",
+							"baseParameters": {
+								"ADLS_Prefix": {
+									"value": "@pipeline().globalParameters.ADLS_Prefix",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ADB-pipelines"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]"
 			]
 		},
 		{
@@ -417,7 +632,7 @@
 					"name": "LoadTypes"
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-17T12:09:31Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_sql_incremental_load_oldwm')]",
@@ -676,7 +891,7 @@
 					"name": "LoadTypes"
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-17T17:48:18Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_sql_source_incremental_2_oldwm')]",
@@ -739,7 +954,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-04T19:00:36Z"
+				"lastPublishTime": "2025-10-06T04:46:30Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_source_sql_db')]"
@@ -965,7 +1180,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_getmeta_filter')]",
@@ -1054,7 +1269,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adls_source_copy_file')]",
@@ -1142,7 +1357,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_adls_source_copy_file')]",
@@ -1398,7 +1613,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_last30mins')]",
@@ -1526,7 +1741,7 @@
 					"name": "LoadTypes"
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-19T03:47:55Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_copy_custom_full_load')]",
@@ -1644,7 +1859,7 @@
 					"name": "LoadTypes"
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-19T02:54:31Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_copy_custom_full_load')]",
@@ -1802,7 +2017,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-02T18:52:23Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_getmeta_filter')]",
@@ -1938,7 +2153,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-02T15:25:30Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_sql_lookup')]",
@@ -2081,7 +2296,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-02T15:25:30Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_practice')]",
@@ -2156,7 +2371,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-07T13:08:32Z"
+				"lastPublishTime": "2025-10-06T04:46:32Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pl_sql_static_copy')]",
@@ -2244,7 +2459,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-07T17:42:54Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_last30mins')]",
@@ -2464,7 +2679,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T16:55:39Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_getmeta_filter')]",
@@ -2668,7 +2883,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T04:44:10Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_getmeta_filter')]",
@@ -2788,7 +3003,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-02T17:54:38Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_multiparameters')]",
@@ -2927,7 +3142,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-12T17:52:40Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_RestResource_source')]",
@@ -3021,7 +3236,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-03T18:10:26Z"
+				"lastPublishTime": "2025-10-06T04:46:30Z"
 			},
 			"dependsOn": []
 		},
@@ -3164,7 +3379,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-07T12:15:45Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_getmetadata_set')]",
@@ -3295,7 +3510,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-08T18:51:38Z"
+				"lastPublishTime": "2025-10-06T04:46:30Z"
 			},
 			"dependsOn": []
 		},
@@ -3335,7 +3550,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-01T13:07:24Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_sql_db_getmetadata')]"
@@ -3378,7 +3593,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-01T13:26:44Z"
+				"lastPublishTime": "2025-10-06T04:46:30Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_sql_lookup')]"
@@ -3449,7 +3664,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-01T19:25:55Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_sql_static_copy')]",
@@ -3540,7 +3755,7 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-20T08:42:26Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_copy_tumbling_window')]",
@@ -3694,11 +3909,76 @@
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2025-09-12T17:15:20Z"
+				"lastPublishTime": "2025-10-06T04:46:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_copy_webactivity')]",
 				"[concat(variables('factoryId'), '/datasets/ds_target_copy_webactivity')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds2_copy_file_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_source",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().FileName",
+							"type": "Expression"
+						},
+						"folderPath": "source",
+						"fileSystem": "adlsgen2sd"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds2_copy_file_target')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "target",
+						"fileSystem": "adlsgen2sd"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_source')]"
 			]
 		},
 		{
@@ -4931,6 +5211,24 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('ls_AKV_sqlsource_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_AzureDatabricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-2525045758817462.2.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('ls_AzureDatabricks_accessToken')]"
+					},
+					"existingClusterId": "[parameters('ls_AzureDatabricks_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
